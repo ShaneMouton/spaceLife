@@ -1,0 +1,364 @@
+<html>
+	<head>
+		<title>
+			SpaceLife
+		</title>
+        <style>
+            input[type="file"]
+            {
+                display: none;
+            }
+
+            .center_head
+            {
+                vertical-align: center;
+                text-align: center;
+            }
+        
+            .label
+            {
+                position: relative;
+                top: 2px;
+                text-align:center;
+                margin-left: 10px;
+                vertical-align: center;
+                float: left;
+                border-radius: 3px;
+                z-index: 2;
+            }
+
+            #toolbar
+            {
+                box-shadow: 0px 5px 5px #000000;
+                vertical-align: center;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: inherit;
+                height: 25px;
+                background-color: #CCCCCC;
+                float: left;
+                z-index: 50;
+                margin: 0px 0px 0px 0px;
+            }
+        
+            #zoombar
+            {
+                box-shadow: 5px 5px 5px #000000;
+                vertical-align: center;
+                text-decoration: bold;
+                position: absolute;
+                top: 575px;
+                left: 15px;
+                width: 25px;
+                height: 50px;
+                background-color: #CCCCCC;
+                float: left;
+                z-index: 50;
+                margin: 0px 0px 0px 0px;
+            }
+            .off
+            {
+                cursor: pointer;
+                position: relative;
+                top: 2px;
+                text-align:center;
+                margin-left: 10px;
+                vertical-align: center;
+                border: 1px solid black;
+                float: left;
+                padding-left: 3px;
+                padding-right: 3px;
+                border-radius: 3px;
+                z-index: 2;
+            }
+        
+            .zoombutton
+            {
+                cursor: pointer;
+                position: relative;
+                top: 2px;
+                text-align:center;
+                width: inherit;
+                height: 25px;
+                margin-left: 0px;
+                vertical-align: center;
+                float: left;
+                z-index: 3;
+            }
+        
+            .on
+            {
+                cursor: pointer;
+                position: relative;
+                top: 2px;
+                text-align:center;
+                margin-left: 10px;
+                vertical-align: center;
+                border: 1px solid black;
+                float: left;
+                padding-left: 3px;
+                padding-right: 3px;
+                border-radius: 3px;
+                z-index: 2;
+                background-color: #000000;
+                color:#FFFFFF;
+            }
+
+            #gamecontainer
+            {
+                width: 640px;
+                height: 640px;
+                margin: 0px 0px 0px 0px;
+                padding: 0px 0px 0px 0px;
+            }
+            #game
+            {
+                position: absolute;
+                top: 0;
+                left: 0;
+                margin: 0px 0px 0px 0px;
+                padding: 0px 0px 0px 0px;
+                float: left;
+                z-index: -1;
+            }
+            body
+            {
+                margin: 0px 0px 0px 0px;
+                padding: 0px 0px 0px 0px;
+                background-color: #000;
+            }
+        
+            #dircontainter
+            {
+                position: absolute;
+                top: 570px;
+                left: 530px;
+            }
+        
+            #rcontainer
+            {
+                position: absolute;
+                top: 17px;
+                left: 525px;
+            }
+            .dirinput
+            {
+                cursor: pointer;
+                opacity:.75;
+                width:25px;
+                height:19px;
+                text-align:center;
+                margin-left: 0px;
+                vertical-align:center;
+                padding-top: 4px;
+                padding-bottom: 2px;
+                background-color: #CCCCCC;
+                color:#000000;
+            }
+            #up
+            {
+                box-shadow: 5px 5px 5px #000000;
+                position: absolute;
+                top: -15px;
+                left: 25px;
+                z-index: 24;
+            }
+            #middle
+            {
+                visibility: hidden;
+                box-shadow: 5px 5px 5px #000000;
+                position: absolute;
+                top: 50px;
+                left: 25px;
+                z-index: 21;
+
+            }
+            #left
+            {
+                box-shadow: 5px 5px 5px #000000;
+                position: absolute;
+                top: 25px;
+                left: -15px;
+                z-index: 19;
+
+            }
+            #right
+            {
+                box-shadow: 5px 5px 5px #000000;
+                position: absolute;
+                top: 25px;
+                left: 65px;
+                z-index: 23;
+            }
+            #down
+            {
+                box-shadow: 5px 5px 5px #000000;
+                position: absolute;
+                top: 25px;
+                left: 25px;
+                z-index: 20;
+            }
+            #reset
+            {
+                cursor: pointer;
+                box-shadow: 5px 5px 5px #000000;
+                position: absolute;
+                left: -10px;
+                z-index: 25;
+            }
+            #clear
+            {
+                cursor: pointer;
+                box-shadow: 5px 5px 5px #000000;
+                position: absolute;
+                left: 55px;
+                z-index: 26;
+            }
+            #info
+            {
+                cursor: pointer;
+                box-shadow: 5px 5px 5px #000000;
+                position: absolute;
+                left: 15px;
+                top: 35px;
+                z-index: 27;
+            }
+            .dialog
+            {
+                display: none;
+                float:left;
+                opacity: .75;
+                width: 330px;
+                height: 120px;
+                z-index: 28;
+                background-color: #CCC;
+                border-radius: 3;
+                box-shadow: 10px 10px 10px #000;
+                padding: 15px 15px 15px 15px;
+                position: relative;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border: 3px double black;
+            }
+            .dialog_button
+            {
+                cursor: pointer;
+                text-align: center;
+                width:30%;
+                border-radius: 5px;
+                border: 3px double black;
+                position: absolute;
+                left: 50%;
+                transform: translate(-50%);
+                bottom: 15px;
+            }
+        
+            .hud{
+                opacity: .75;
+        -webkit-animation: fadein .5s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein .5s; /* Firefox < 16 */
+        -ms-animation: fadein .5s; /* Internet Explorer */
+         -o-animation: fadein .5s; /* Opera < 12.1 */
+            animation: fadein .5s;
+            }
+        
+            .hud_dis
+            {
+                opacity: 0;
+        -webkit-animation: fadeout 2s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadeout 2s; /* Firefox < 16 */
+        -ms-animation: fadeout 2s; /* Internet Explorer */
+         -o-animation: fadeout 2s; /* Opera */
+            }
+        
+            @keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: .75; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: .75; }
+}
+
+            @keyframes fadeout {
+    from { opacity: .75; }
+    to   { opacity: 0; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadeout {
+    from { opacity: .75; }
+    to   { opacity: 0; }
+}
+        
+        </style>
+	</head>
+        <script type="text/javascript" src="jq.js"></script>
+
+    <body oncontextmenu="return false;">
+        <div id="gamecontainer">
+            <div id="rcontainer">
+                <label for="file-input" class="dirinput hud" id="load" style="position:relative;top:22px;left:-75px;padding:4px 8px 3px 8px;box-shadow: 5px 5px 5px #000;">Load</label>
+                <div class="dirinput hud" id="reset" style="width:50px;" onclick='gol.map.randomize();update=1;'>Soup</div>
+                <div class="dirinput hud" id="clear" style="width:50px;" onclick='gol.map.clear();update=1;'>Clear</div>
+            </div>
+            <div class="dirinput hud" id="info" onclick="toggleInfo();">?</div>
+            <div id="dircontainter">
+                <div class="dirinput hud" id="up" onmousedown='key="up";pressed=1;' onmouseup='pressed=0;'>&#x25b2;</div>
+                <div class="dirinput hud" id="down" onmousedown='key="down";pressed=1;' onmouseup='pressed=0;'>&#x25BC;</div>
+                <div class="dirinput hud" id="left" onmousedown='key="left";pressed=1;' onmouseup='pressed=0;'>&#x25C0;</div>
+                <div class="dirinput hud" id="right" onmousedown='key="right";pressed=1;' onmouseup='pressed=0;'>&#x25B6;</div>
+            </div>
+                <div id="toolbar" class="hud">
+                    <div id="pausebutton" class="off" onmouseup="togglePause();">Pause</div>
+                    <div class="off" onmouseup="step = 1;">Step</div>
+                    <div class="label">S</div>
+                    <div id="s[0]" class="off" onclick='setRuleToggles(gol.toggle.S(0));'>0</div>
+                    <div id="s[1]" class="off" onclick='setRuleToggles(gol.toggle.S(1));'>1</div>
+                    <div id="s[2]" class="off" onclick='setRuleToggles(gol.toggle.S(2));'>2</div>
+                    <div id="s[3]" class="off" onclick='setRuleToggles(gol.toggle.S(3));'>3</div>
+                    <div id="s[4]" class="off" onclick='setRuleToggles(gol.toggle.S(4));'>4</div>
+                    <div id="s[5]" class="off" onclick='setRuleToggles(gol.toggle.S(5));'>5</div>
+                    <div id="s[6]" class="off" onclick='setRuleToggles(gol.toggle.S(6));'>6</div>
+                    <div id="s[7]" class="off" onclick='setRuleToggles(gol.toggle.S(7));'>7</div>
+                    <div id="s[8]" class="off" onclick='setRuleToggles(gol.toggle.S(8));'>8</div>
+                    <div class="label">B</div>
+                    <!--  The following rule is pretty much never needed/useful -->
+                    <div id="b[0]" class="off" onclick='setRuleToggles(gol.toggle.B(0));' style="display:none;">0</div>
+                    <div id="b[1]" class="off" onclick='setRuleToggles(gol.toggle.B(1));'>1</div>
+                    <div id="b[2]" class="off" onclick='setRuleToggles(gol.toggle.B(2));'>2</div>
+                    <div id="b[3]" class="off" onclick='setRuleToggles(gol.toggle.B(3));'>3</div>
+                    <div id="b[4]" class="off" onclick='setRuleToggles(gol.toggle.B(4));'>4</div>
+                    <div id="b[5]" class="off" onclick='setRuleToggles(gol.toggle.B(5));'>5</div>
+                    <div id="b[6]" class="off" onclick='setRuleToggles(gol.toggle.B(6));'>6</div>
+                    <div id="b[7]" class="off" onclick='setRuleToggles(gol.toggle.B(7));'>7</div>
+                    <div id="b[8]" class="off" onclick='setRuleToggles(gol.toggle.B(8));'>8</div>
+                </div>
+                <div id="zoombar" class="hud">
+                    <div id="zoomin" class="zoombutton" onclick='zoomIn();'>+</div>
+                    <div id="zoomout" class="zoombutton" onclick='zoomOut();'>&ndash;</div>
+                </div>
+                <div class="dialog" id="about"><div style="text-align:center;">SpaceLife v0.9</div><p>Designed to be a fast imlementation of Conway's Game of Life in Javascript and html canvas.</p><div class="dialog_button" onclick="toggleInfo();">OK</div></div>
+                
+                <div class="dialog" id="error"><div style="text-align:center;">Error:</div><p id="error_body"></p><div class="dialog_button" onclick="toggleError();">OK</div>
+                </div>
+                <canvas id="game" width="640" height="640">
+            </div>
+        
+<input id="file-input" type="file"/>        
+<input type="file" id="file-input">
+            
+        <script type="text/javascript" src="gol.js"></script>
+        <script type="text/javascript" src="imagelib.js"></script>
+
+        <script type="text/javascript">
+
+        
+        </script>
+        
+    </body>
+</html>
