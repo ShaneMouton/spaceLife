@@ -4,78 +4,9 @@
 			SpaceLife
 		</title>
      <body>
-		 <script type="text/javascript">
+		 <script type="text/javascript" src="gol.js">
 
-			 /* Prototypes  */
-		     var FieldAbstract = function()
-		     {
-		         this.bounds = {
-		             xUpper: 0,
-		             xLower: 0,
-		             yUpper: 0,
-		             yLower: 0
-		         };
-		     }
 
-		     FieldAbstract.prototype._getIndex = function(x, y)
-		     {
-		         return Math.abs(x*y+x);
-		     }
-
-		     FieldAbstract.prototype._setCell = function(x, y, data)
-		     {
-				 var cell;
-
-		         if (x < this.bounds.xLower)
-		             this.bounds.xLower = x;
-
-		         if (y < this.bounds.yLower)
-		             this.bounds.yLower = y;
-
-		         if (x > this.bounds.xUpper)
-		             this.bounds.xUpper = x;
-
-		         if (y > this.bounds.yUpper)
-		             this.bounds.yUpper = y;
-
-		         cell = this._getCell(x, y);
-				 cell.value = data;
-		     }
-
-			 FieldAbstract.prototype.getBounds = function()
-			 {
-				 return this.bounds;
-			 }
-
-		     var InfiniteField = function()
-			 {
-				 this._quadrant = [[],[],[],[]];
-			 }
-
-		    InfiniteField.prototype = new FieldAbstract();
-
-		     /*  Classes */
-			InfiniteField.prototype._getQuadrant = function(x, y)
-			{
-				if(x <= 0 && y <= 0)        return 0;
-				if(x <= 0 && !(y <= 0))     return 1;
-				if(!(x <= 0) && y <= 0)     return 2;
-				if(!(x <= 0) && !(y <= 0))  return 3;
-			}
-
-		     InfiniteField.prototype._getCell = function(x, y)
-		     {
-		         var q = this._getQuadrant(x,y);
-		         var idx = this._getIndex(x,y)
-
-				 if (typeof this._quadrant[q][idx] === 'undefined')
-				 {
-					 console.log("value not set!")
-				 	this._quadrant[q][idx] = {heat:0, value: null};
-				}
-
-		         return this._quadrant[q][idx];
-		     }
 
 		 </script>
     </body>

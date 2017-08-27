@@ -10,6 +10,8 @@ function Game(arg)
     var changes = [];
     var tested = [];
 
+    /* Neighbor hood */
+
     if (!finite)
         field = new InfiniteField();
     elseif (fintite)
@@ -135,22 +137,90 @@ function Game(arg)
         return count;
     }
 
+    /* applies rule to cell and returns if change occured (true/false) */
     this._applyRule = function(x, y)
     {
         var count = this._countNeighbors(x,y);
         var isAlive = (this._getCell(x,y) ? true : false);
 
+        var changed = false;
+
         if (!isAlive) /* is dead */
         {
             if (this._B[count])
+            {
                 this._setCell(x, y, true);
+                changed = true;
+            }
         }
         else /* is alive */
         {
             if (!this._S[count])
+            {
                 this._setCell(x, y, false);
-
+                changed = true;
+            }
         }
+
+        if (changed)
+            return {x: x, y: y}
+        else
+            return null;
     }
 
+    this.iterate = function()
+    {
+        var self = this;
+        var newChanges = [];
+
+        /* cells already tested this iteration */
+        var tested = [];
+
+        var currentChange;
+        var currentX;
+        var currentY;
+
+        var applyChanges = function()
+        {
+
+        }
+
+        var testNeighbors = function(x, y)
+        {
+            var pushChanges = function(changes)
+            {
+                if(changes)
+                    newChanges.push({x: x, y: y})
+            }
+
+            var test = function(x, y)
+            {
+                if(tested[x*y+x] === 'undefined')
+                {
+                    tested[x*y+x] = true;
+                    pushChanges(self._applyRule(x, y));
+                }
+            }
+
+            test(x, y-1);
+            test(x, y+1);
+            test(x-1, y);
+            test(x-1, y-1);
+            test(x-1, y+1);
+            test(x+1, y);
+            test(x+1, y-1);
+            test(x+1, y+1);
+        }
+
+        while(changes.length)
+        {
+            currentChange = changes.pop();
+            currentX = currentChange.x;
+            currentY = currentChange.y;
+
+            testNeighbors(currentX, currentY);
+        }
+
+        tested.length = 0;
+    }
 }
